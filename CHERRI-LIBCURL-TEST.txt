@@ -1,0 +1,15 @@
+Why this build changed:
+The installed proxy-bootstrap release provides Libcurl transport assets.
+The previous Epoxy builds failed before contacting Cherri because Epoxy was unavailable.
+
+This build uses:
+Transport: Libcurl
+Wisp: wss://cherrion.top/socket/
+
+Install/test:
+1. Replace the project files.
+2. Ctrl+C to stop the prior server.
+3. npm install
+4. npm run dev
+5. Open http://localhost:3030
+6. Press Ctrl+Shift+R

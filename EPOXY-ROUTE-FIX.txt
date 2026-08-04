@@ -1,0 +1,15 @@
+This build manually serves the missing Epoxy browser client at:
+
+/clients/epoxy-client.js
+
+It is loaded from proxy-bootstrap's downloaded Epoxy package.
+
+Run:
+1. Ctrl+C
+2. npm install
+3. npm run dev
+4. Open http://localhost:3030
+5. Ctrl+Shift+R
+
+The configured test Wisp remains:
+wss://cherrion.top/socket/

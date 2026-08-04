@@ -1,0 +1,10 @@
+Built-in Berri routes:
+
+berri://home
+berri://g
+berri://ai
+berri://movies
+berri://music
+berri://settings
+
+Normal searches and websites continue to load through Scramjet in the same tab.

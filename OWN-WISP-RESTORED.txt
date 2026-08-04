@@ -1,0 +1,22 @@
+Berri has been restored to its own Wisp/Scramjet setup.
+
+Kept:
+- Cherri-style Berri homepage
+- berri://home
+- berri://g
+- berri://ai
+- berri://movies
+- berri://music
+- berri://settings
+
+Removed:
+- wss://cherrion.top/socket/
+- Cherri-only Libcurl transport modifications
+
+Run:
+1. Ctrl+C
+2. npm install
+3. npm run dev
+4. Open http://localhost:3030
+
+For Render, deploy this same project using npm start.

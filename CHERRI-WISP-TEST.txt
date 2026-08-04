@@ -1,0 +1,8 @@
+Berri Cherri Wisp test
+
+Configured endpoint:
+wss://cherrion.top/socket/
+
+This changes the Wisp/network endpoint used by Scramjet.
+Berri still needs to be served locally or from a normal web host so its HTML, JS, service worker, and Scramjet assets can load.
+Because this is a third-party endpoint, it can stop working, reject outside origins, or change without notice.

@@ -1,0 +1,1 @@
+Updated Berri Browser to use the uploaded berry icon as the favicon, app badge, and homepage icon.

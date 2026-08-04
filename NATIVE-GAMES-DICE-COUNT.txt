@@ -1,0 +1,6 @@
+Native Lumin games adjustments
+
+- Random button now uses a dice icon.
+- Lumin's native hover favorite control is not replaced or modified.
+- Added visible/total game counter, for example 1169 of 1169.
+- The counter updates after native search/filter changes.

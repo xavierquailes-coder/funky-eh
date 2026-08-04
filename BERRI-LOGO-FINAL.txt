@@ -1,0 +1,7 @@
+Final Berri logo update
+
+- Replaced the old orange Scramjet icon.png.
+- Added a pink Berri icon with a white B.
+- Uses the Berri icon as the browser favicon.
+- Uses it for the top-left in-app badge.
+- Uses it beside the Berri homepage wordmark.

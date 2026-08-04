@@ -1,0 +1,11 @@
+Berri Games now uses Lumin's native interface.
+
+Why:
+The Cherri screenshot is based on Lumin's own UI. Rebuilding the cards manually
+broke the game count and grid.
+
+Changes:
+- Restored native Lumin search, filters, favorites, recent list, random button,
+  game count, cards, and hover favorite star.
+- Hid only the Lumin provider dropdown.
+- Kept the page full-width with Berri's berry background.

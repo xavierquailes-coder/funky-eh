@@ -1,0 +1,13 @@
+Berri Movies no-key build
+
+Changes:
+- Removed TMDB token requirement and API settings screen.
+- Movie browsing/search now uses a no-key metadata catalog.
+- Movie IDs use IMDb IDs.
+- Source labels are now animals:
+  Monkey, Elk, Tiger, Wolf, Falcon, Panda, Lion, Otter, Cobra, Shark, Fox, Bear.
+- Existing source URL order was preserved.
+- No source URLs were added or changed.
+
+Open:
+berri://movies

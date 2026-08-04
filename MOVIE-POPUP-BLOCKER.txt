@@ -1,0 +1,11 @@
+Movies Pop-up Blocker
+
+- Added to berri://settings under Movies.
+- Enabled automatically by default.
+- Movie iframes use a sandbox without pop-up or top-navigation permissions.
+- Parent window.open calls are blocked while the Berri movie player is open.
+- Users can turn the blocker off in Settings if a player requires it.
+
+Note:
+Browser and iframe security rules can limit what a parent page can detect.
+The sandbox is the main protection against pop-ups from embedded players.

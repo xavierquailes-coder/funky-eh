@@ -1,0 +1,10 @@
+Fixes:
+- All Apps now opens berri://apps instead of Settings.
+- berri://apps displays all saved bookmarks and an Add Bookmark card.
+- Homepage and sidebar icons now use bundled SVG icon files in /public/icons/.
+- No emoji icons are used for the main navigation.
+
+Routes:
+berri://apps
+berri://bookmarks
+berri://all

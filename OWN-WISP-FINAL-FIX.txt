@@ -1,0 +1,19 @@
+This build uses Berri's own Wisp server through Proxy Bootstrap.
+
+It fixes:
+Failed to load /scram/scramjet.js
+
+Why:
+The prior build mixed the old static Scramjet server with the newer
+Proxy Bootstrap browser code. This build uses Proxy Bootstrap for all
+Scramjet assets, Libcurl transport, the service worker, and /wisp/.
+
+Run:
+1. Stop the old server with Ctrl+C.
+2. Replace all project files.
+3. Run npm install.
+4. Run npm run dev.
+5. Open http://localhost:3030.
+6. Press Ctrl+Shift+R once.
+
+Do not open an old /~/sj/... address directly.

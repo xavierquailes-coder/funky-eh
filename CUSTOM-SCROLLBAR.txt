@@ -1,0 +1,8 @@
+Added a Berri-styled custom scrollbar across the browser.
+
+Changes:
+- Removes the white default scrollbar look.
+- Uses a dark berry track.
+- Uses a pink gradient thumb.
+- Hides default scrollbar arrow buttons.
+- Applies to home, games, apps, history, and settings pages.

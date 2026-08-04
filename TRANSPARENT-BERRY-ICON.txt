@@ -1,0 +1,1 @@
+Updated to use the berry icon with the dark square background removed (transparent background).

@@ -1,0 +1,14 @@
+Berri Movies catalog expansion
+
+Changes:
+- Home rows now load multiple TMDB pages instead of only page 1.
+- Added Browse All Movies.
+- Added Load More Movies.
+- Search now loads multiple result pages.
+- Added Load More Results.
+- Duplicate movies are removed.
+- Existing player/source code was left unchanged.
+
+Important:
+A TMDB Read Access Token is required for the large catalog.
+Without a token, Berri still uses the much smaller sample catalog.

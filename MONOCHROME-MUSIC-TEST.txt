@@ -1,0 +1,13 @@
+Berri Music Monochrome test
+
+Route:
+berri://music
+
+Behavior:
+- Loads https://monochrome.tf through Berri's Scramjet frame.
+- Keeps the service inside the Berri Music page when compatible.
+- Provides Reload and Open as Browser Tab buttons.
+- Does not copy, reverse-engineer, or directly access Monochrome streaming endpoints.
+- Monochrome controls song availability, accounts, advertisements, and playback.
+
+Games and Movies were not intentionally modified.
