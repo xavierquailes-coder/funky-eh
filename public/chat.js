@@ -1,210 +1,230 @@
-/* Berri Chat internal route (berri://chat)
-   Generated from the working RIW/Berri Firebase chat.
-   This is NOT a standalone page: it mounts into the main Berri app. */
-(function(){
-  const CHAT_CSS = "@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap');\n\n:host{--bg:#180914;--side:#230b1b;--panel:#2a0e20;--panel2:#351229;--line:rgba(255,179,198,.18);--muted:#c78fa7;--text:#fff6f2;--pink:#e63462;--pink2:#ff7a9c;--green:#39d98a;--danger:#ff6684;--ease:cubic-bezier(.16,1,.3,1)}\n*{box-sizing:border-box}:host{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow:hidden}button,input,textarea,select{font:inherit}.app{height:100%;min-height:0;display:grid;grid-template-columns:230px minmax(0,1fr) 265px;background:var(--bg)}\n.sidebar{border-right:1px solid var(--line);padding:12px 10px;background:var(--side);overflow:auto}.brand{display:flex;align-items:center;gap:9px;padding:5px 7px 13px;font:800 17px Lexend,sans-serif;color:#fff}.brand-mark{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--pink2));box-shadow:0 8px 25px rgba(230,52,98,.28)}\n.search{position:relative}.search i{position:absolute;left:11px;top:11px;color:#a8788f}.search input{width:100%;height:38px;padding:0 12px 0 34px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--text);outline:none}.search input:focus{border-color:rgba(255,122,156,.6);box-shadow:0 0 0 3px rgba(230,52,98,.12)}\n.section-title{display:flex;align-items:center;justify-content:space-between;color:#b77d99;font-size:10px;font-weight:800;letter-spacing:.09em;margin:20px 4px 8px;text-transform:uppercase}.section-title button{border:0;background:none;color:#c895ad;font-size:18px;cursor:pointer}.nav-item{position:relative;width:100%;display:flex;align-items:center;gap:9px;border:0;background:transparent;color:#d5a8ba;padding:8px 9px;border-radius:8px;cursor:pointer;text-align:left;transition:.2s var(--ease)}.nav-item:hover,.nav-item.active{background:rgba(230,52,98,.17);color:white;transform:translateX(2px)}.nav-item.active{box-shadow:inset 3px 0 0 var(--pink2)}.nav-item .avatar{width:31px;height:31px}.channels .nav-item{font:500 13px Lexend,sans-serif}.channels .hash{font-weight:800;color:#a8748b}\n.main{min-width:0;display:flex;flex-direction:column;background:#1b0916}.topbar{height:58px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:0 18px;background:#1b0916}.topbar h2{font:700 15px Lexend,sans-serif;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top-actions{display:flex;gap:7px}.icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:#d8a9ba;cursor:pointer}.icon-btn:hover{color:white;border-color:rgba(255,122,156,.45);transform:translateY(-1px)}\n.messages{flex:1;overflow:auto;padding:18px 20px 10px;overscroll-behavior:contain;scroll-behavior:smooth}.empty{height:100%;display:grid;place-items:center;color:#a87991;text-align:center}.empty i{font-size:32px;color:var(--pink2);margin-bottom:8px}.message{display:grid;grid-template-columns:42px minmax(0,1fr);gap:11px;padding:8px 6px;border-radius:8px;animation:msgIn .28s var(--ease)}@keyframes msgIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}.message:hover{background:rgba(255,255,255,.025)}.avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#60344b}.message-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.display{font-weight:800;font-size:13px;cursor:pointer}.username,.ago,.edited{font-size:10px;color:#a4768a}.body{font-size:13px;line-height:1.5;margin-top:3px;word-break:break-word}.mention{color:#d9c1ff;background:rgba(141,92,255,.14);border-radius:4px;padding:1px 3px}.everyone-mention{color:#ffd47a;background:rgba(255,190,50,.1)}.media{max-width:min(430px,100%);max-height:330px;border-radius:11px;margin-top:8px;display:block}\n.composer-wrap{padding:8px 18px 16px}.composer{border:1px solid var(--line);background:var(--panel);border-radius:16px;overflow:hidden;transition:.2s}.composer:focus-within{border-color:rgba(255,122,156,.5);box-shadow:0 0 0 3px rgba(230,52,98,.09)}.composer textarea{width:100%;min-height:54px;max-height:150px;resize:none;background:transparent;border:0;color:var(--text);padding:14px;outline:none}.composer textarea:disabled{color:#936b7e;cursor:not-allowed}.tools{min-height:38px;border-top:1px solid rgba(255,179,198,.1);display:flex;align-items:center;gap:2px;padding:3px 10px}.tools button{border:0;background:none;color:#bd8ba1;min-width:29px;height:28px;cursor:pointer;border-radius:6px;font-weight:800}.tools button:hover{background:rgba(255,255,255,.06);color:white}.tools button:disabled{opacity:.3;cursor:not-allowed}.send{margin-left:auto!important;color:var(--pink2)!important}\n.rightbar{border-left:1px solid var(--line);background:var(--side);padding:15px 14px;overflow:auto}.rightbar h3{font-size:11px;color:#b47c96;text-transform:uppercase;letter-spacing:.07em}.member{display:flex;align-items:center;gap:9px;padding:8px 4px;border-radius:8px;cursor:pointer}.member:hover{background:rgba(230,52,98,.08)}.member .avatar{width:32px;height:32px}.status-dot{width:9px;height:9px;border-radius:50%;margin-left:auto;flex:0 0 9px}.status-dot.online{background:var(--green);box-shadow:0 0 7px rgba(57,217,138,.5)}.status-dot.offline{background:#73576a}.member.offline{opacity:.62}.member-section-label{margin:14px 2px 6px;color:#ae788f;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}\n.auth-callout{padding:13px;border:1px solid var(--line);background:var(--panel);border-radius:12px;color:#bd8ea3;font-size:12px;line-height:1.5}.pink-btn{border:0;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;border-radius:10px;padding:10px 15px;font-weight:800;cursor:pointer}.ghost-btn{border:1px solid var(--line);background:var(--panel);color:#d3a5b8;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer}.danger-btn{border:1px solid rgba(255,102,132,.35);background:rgba(255,102,132,.09);color:#ff90a6;border-radius:9px;padding:8px 11px;font-weight:700;cursor:pointer}.modal-backdrop{position:fixed;inset:0;background:rgba(9,2,7,.82);backdrop-filter:blur(7px);display:flex;visibility:hidden;opacity:0;pointer-events:none;align-items:center;justify-content:center;z-index:99;padding:20px;transition:.2s}.modal-backdrop.show{visibility:visible;opacity:1;pointer-events:auto}.modal{width:min(500px,100%);max-height:90vh;overflow:auto;background:#220b1a;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 25px 80px #000;transform:translateY(15px) scale(.98);transition:.28s var(--ease)}.modal-backdrop.show .modal,.modal-backdrop.show .profile-card{transform:none}.modal h2{font-size:18px;margin:0 0 20px}.field{margin:13px 0}.field label{display:block;color:#c08da3;font-size:11px;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:11px;outline:none}.field textarea{min-height:85px;resize:vertical}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:22px;flex-wrap:wrap}.profile-card{width:min(430px,100%);background:#220b1a;border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative;transform:translateY(15px) scale(.98);transition:.28s var(--ease)}.banner{height:130px;background:#39142b center/cover no-repeat}.profile-main{padding:0 16px 18px}.profile-avatar{width:82px;height:82px;border-radius:50%;object-fit:cover;background:#60344b;border:6px solid #220b1a;margin-top:-41px}.close-x{position:absolute;right:12px;top:112px;width:31px;height:31px;border:0;border-radius:50%;background:#4b1d38;color:#e5b7c9;cursor:pointer}.profile-name{font-size:20px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:5px}.profile-user{color:#bc889f;font-size:12px}.profile-bio{font-size:13px;line-height:1.5;margin:16px 0}.profile-meta{border-top:1px solid var(--line);padding-top:12px;color:#c798ad;font-size:12px;display:flex;gap:16px}.profile-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.verified{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;background:#559dff;color:white;font-size:9px}.role-badge{display:inline-flex;border-radius:999px;padding:2px 7px;font-size:9px;font-weight:800;border:1px solid currentColor;margin-left:3px}.banned{color:#ff8ba1;font-size:9px;font-weight:800}.toast{position:fixed;right:20px;bottom:20px;background:#351229;border:1px solid var(--line);padding:11px 15px;border-radius:10px;z-index:300;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:none}.message-menu{position:fixed;z-index:350;display:none;min-width:150px;padding:6px;background:#351229;border:1px solid var(--line);border-radius:10px;box-shadow:0 15px 45px #000}.message-menu.show{display:block}.message-menu button{width:100%;border:0;background:transparent;color:#f0c7d7;padding:9px 10px;text-align:left;border-radius:7px;cursor:pointer}.message-menu button:hover{background:rgba(255,255,255,.06)}.message-menu .danger{color:#ff91a6}\n.owner-panel{display:none;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.owner-panel.show{display:block}.owner-title{color:#ffd278;font-weight:800;margin-bottom:10px}.owner-user{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;background:rgba(255,255,255,.025)}.owner-user-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.owner-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.owner-controls button,.owner-controls select{font-size:10px;padding:7px 8px;border-radius:7px;border:1px solid var(--line);background:var(--panel);color:var(--text)}\n.gif-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:360px;overflow:auto;margin-top:12px}.gif-result{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:0;overflow:hidden;cursor:pointer;aspect-ratio:1}.gif-result img{width:100%;height:100%;object-fit:cover;display:block}.gif-status{font-size:12px;color:#b9829c;margin-top:10px}\n.sidebar::-webkit-scrollbar,.rightbar::-webkit-scrollbar,.messages::-webkit-scrollbar,.modal::-webkit-scrollbar{width:8px}.sidebar::-webkit-scrollbar-thumb,.rightbar::-webkit-scrollbar-thumb,.messages::-webkit-scrollbar-thumb,.modal::-webkit-scrollbar-thumb{background:#6d3854;border:2px solid transparent;background-clip:padding-box;border-radius:99px}\n.mobile-menu-btn{display:none}\n@media(max-width:980px){.app{grid-template-columns:205px minmax(0,1fr)}.rightbar{position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(300px,86vw);display:block;transform:translateX(105%);transition:.25s var(--ease);box-shadow:-18px 0 55px rgba(0,0,0,.6);padding-top:72px}.rightbar.show{transform:none}}\n@media(max-width:680px){.app{grid-template-columns:1fr}.main{height:100%}.mobile-menu-btn{display:inline-grid;place-items:center}.topbar{height:54px;padding:0 9px;gap:7px;justify-content:flex-start}.topbar h2{margin-right:auto}.top-actions{gap:4px}.icon-btn{width:33px;height:33px}.sidebar{position:fixed;z-index:90;inset:0 auto 0 0;width:min(285px,88vw);transform:translateX(-105%);transition:.25s var(--ease);box-shadow:18px 0 55px rgba(0,0,0,.7);padding-top:max(12px,env(safe-area-inset-top))}.sidebar.open{transform:none}.messages{padding:10px 8px 7px}.message{grid-template-columns:34px minmax(0,1fr);gap:8px;padding:7px 3px}.message .avatar{width:34px;height:34px}.composer-wrap{padding:6px 8px calc(8px + env(safe-area-inset-bottom))}.composer textarea{font-size:16px;min-height:46px;padding:11px}.tools{overflow-x:auto;scrollbar-width:none}.tools::-webkit-scrollbar{display:none}.tools button{flex:0 0 30px}.rightbar{width:min(300px,88vw);padding:68px 14px 18px}.modal-backdrop{padding:8px;align-items:flex-end}.modal,.profile-card{width:100%;max-height:92dvh;border-radius:18px 18px 0 0}.modal{padding:18px 14px calc(18px + env(safe-area-inset-bottom))}.toast{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));text-align:center}.gif-results{grid-template-columns:repeat(2,1fr)}}\n";
+/* Berri Chat bridge
+   berri://chat uses the exact working chat from:
+   https://berrios-lumin-games-integrated.vercel.app/chat.html
 
-  const CHAT_MARKUP = "<div class=\"app\">\n<aside class=\"sidebar\" id=\"sidebar\">\n<div class=\"brand\"><div class=\"brand-mark\">B</div>Berri Chat</div>\n<div class=\"search\"><i class=\"fa-solid fa-magnifying-glass\"></i><input autocomplete=\"off\" id=\"searchInput\" placeholder=\"Search users, DMs, or channels\"/></div>\n<div class=\"section-title\">Direct Messages <button id=\"newDmBtn\">+</button></div><div id=\"dmList\"></div>\n<div class=\"section-title\">Group Chats <button id=\"newGroupBtn\">+</button></div><div id=\"groupList\"></div>\n<div class=\"section-title\">Channels</div><div class=\"channels\" id=\"channelList\"></div>\n</aside>\n<main class=\"main\">\n<header class=\"topbar\">\n<button aria-label=\"Open navigation\" class=\"icon-btn mobile-menu-btn\" id=\"mobileMenuBtn\"><i class=\"fa-solid fa-bars\"></i></button>\n<h2 id=\"roomTitle\"># general</h2>\n<div class=\"top-actions\"><button class=\"icon-btn\" id=\"membersBtn\" title=\"Members\"><i class=\"fa-solid fa-user-group\"></i></button><button class=\"icon-btn\" id=\"settingsBtn\" title=\"Profile settings\"><i class=\"fa-solid fa-gear\"></i></button><button class=\"icon-btn\" id=\"chatHomeBtn\" title=\"Back to Berri\"><i class=\"fa-solid fa-house\"></i></button></div>\n</header>\n<section class=\"messages\" id=\"messages\"></section>\n<div class=\"composer-wrap\"><div class=\"composer\"><textarea disabled=\"\" id=\"composer\" placeholder=\"You must be authenticated to chat.\"></textarea><div class=\"tools\"><button data-format=\"**\"><b>B</b></button><button data-format=\"*\"><i>I</i></button><button data-format=\"~~\"><s>S</s></button><button data-format=\"__\"><u>U</u></button><button data-format=\"`\">&lt;/&gt;</button><button id=\"gifBtn\">GIF</button><button data-format=\"# \">H1</button><button data-format=\"## \">H2</button><button class=\"send\" id=\"sendBtn\"><i class=\"fa-solid fa-paper-plane\"></i></button></div></div></div>\n</main>\n<aside class=\"rightbar\"><h3 id=\"memberHeading\">Members \u2014 0</h3><div id=\"memberList\"></div><div class=\"auth-callout\" id=\"guestBox\">Create an account or log in to chat, make groups, send DMs, and customize your profile.<br/><br/><button class=\"pink-btn\" id=\"openAuthBtn\">Create account</button></div></aside>\n</div>\n<div class=\"modal-backdrop\" id=\"authModal\"><div class=\"modal\"><h2 id=\"authTitle\">Create your Berri Chat account</h2><div class=\"field\"><label>Username</label><input autocomplete=\"username\" id=\"authUsername\" maxlength=\"22\" placeholder=\"your_username\"/></div><div class=\"field\"><label>Password</label><input autocomplete=\"current-password\" id=\"authPassword\" minlength=\"6\" placeholder=\"At least 6 characters\" type=\"password\"/></div><div class=\"modal-actions\"><button class=\"ghost-btn\" data-close=\"authModal\">Cancel</button><button class=\"ghost-btn\" id=\"switchAuth\">I already have an account</button><button class=\"pink-btn\" id=\"authSubmit\">Create</button></div></div></div>\n<div class=\"modal-backdrop\" id=\"groupModal\"><div class=\"modal\"><h2>New Group Chat</h2><div class=\"field\"><label>Group Name</label><input id=\"groupName\" placeholder=\"e.g. the squad\"/></div><div class=\"field\"><label>Members</label><input id=\"groupMembers\" placeholder=\"usernames, comma separated\"/></div><div class=\"modal-actions\"><button class=\"ghost-btn\" data-close=\"groupModal\">Cancel</button><button class=\"pink-btn\" id=\"createGroup\">Create</button></div></div></div>\n<div class=\"modal-backdrop\" id=\"dmModal\"><div class=\"modal\"><h2>Start a Direct Message</h2><div class=\"field\"><label>Username</label><input id=\"dmUsername\" placeholder=\"username\"/></div><div class=\"modal-actions\"><button class=\"ghost-btn\" data-close=\"dmModal\">Cancel</button><button class=\"pink-btn\" id=\"createDm\">Message</button></div></div></div>\n<div class=\"modal-backdrop\" id=\"settingsModal\"><div class=\"modal\"><h2>Profile Settings</h2><div class=\"field\"><label>Display name</label><input id=\"setDisplay\"/></div><div class=\"field\"><label>Profile picture URL</label><input id=\"setAvatar\" placeholder=\"https://...\"/></div><div class=\"field\"><label>Banner image URL</label><input id=\"setBanner\" placeholder=\"https://...\"/></div><div class=\"field\"><label>Description</label><textarea id=\"setBio\" maxlength=\"180\"></textarea></div><div class=\"owner-panel\" id=\"ownerPanel\"><div class=\"owner-title\"><i class=\"fa-solid fa-crown\"></i> Owner controls</div><div id=\"ownerUserList\"></div></div><div class=\"modal-actions\"><button class=\"ghost-btn\" id=\"signOutBtn\">Sign out</button><button class=\"ghost-btn\" data-close=\"settingsModal\">Cancel</button><button class=\"pink-btn\" id=\"saveSettings\">Save</button></div></div></div>\n<div class=\"modal-backdrop\" id=\"gifModal\"><div class=\"modal\"><h2>Search GIPHY GIFs</h2><div style=\"display:grid;grid-template-columns:1fr auto;gap:8px\"><input id=\"gifSearch\" placeholder=\"Search GIFs\" style=\"border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:11px;outline:none\"/><button class=\"pink-btn\" id=\"searchGifBtn\">Search</button></div><div class=\"gif-status\" id=\"gifStatus\">Search for a GIF, then click one to add it.</div><div class=\"gif-results\" id=\"gifResults\"></div><div class=\"modal-actions\"><button class=\"ghost-btn\" data-close=\"gifModal\">Cancel</button></div></div></div>\n<div class=\"modal-backdrop\" id=\"profileModal\"><div class=\"profile-card\"><div class=\"banner\" id=\"profileBanner\"></div><button class=\"close-x\" data-close=\"profileModal\">\u00d7</button><div class=\"profile-main\"><img alt=\"\" class=\"profile-avatar\" id=\"profileAvatar\"/><div class=\"profile-name\" id=\"profileName\"></div><div class=\"profile-user\" id=\"profileUser\"></div><div id=\"profileRoles\"></div><div class=\"profile-bio\" id=\"profileBio\"></div><div class=\"profile-meta\"><span><b id=\"profileFriends\">0</b> friends</span><span>Joined <b id=\"profileJoined\"></b></span></div><div class=\"profile-actions\"><button class=\"ghost-btn\" id=\"profileMessage\"><i class=\"fa-solid fa-comment\"></i> Message</button><button class=\"ghost-btn\" id=\"profileFriend\"><i class=\"fa-solid fa-user-plus\"></i> Add friend</button></div></div></div></div>\n<div class=\"message-menu\" id=\"messageMenu\"><button id=\"editMessageBtn\"><i class=\"fa-solid fa-pen\"></i> Edit message</button><button class=\"danger\" id=\"unsendMessageBtn\"><i class=\"fa-solid fa-trash\"></i> Unsend</button></div>\n<div class=\"modal-backdrop\" id=\"editModal\"><div class=\"modal\"><h2>Edit message</h2><div class=\"field\"><input id=\"editMessageInput\" maxlength=\"1200\"/></div><div class=\"modal-actions\"><button class=\"ghost-btn\" data-close=\"editModal\">Cancel</button><button class=\"pink-btn\" id=\"saveEditBtn\">Save changes</button></div></div></div>\n<div class=\"toast\" id=\"toast\"></div>";
+   No chat.html file is required in this project.
+*/
+(function () {
+  const LIVE_CHAT_URL =
+    'https://berrios-lumin-games-integrated.vercel.app/chat.html';
 
-  const CHAT_CODE = "\nconst FIREBASE_CONFIG={apiKey:\"AIzaSyAYVlECnmR7FK37iGGoeMzqNKpPhN6ihiw\",authDomain:\"riw-chat.firebaseapp.com\",databaseURL:\"https://riw-chat-default-rtdb.firebaseio.com\",projectId:\"riw-chat\",storageBucket:\"riw-chat.firebasestorage.app\",messagingSenderId:\"978045307627\",appId:\"1:978045307627:web:e47bfaf2d24ff7da60ccae\"};\nconst ROOT='squiddChatV5';\nconst OWNER_USERNAME='astrovino';\nconst GIPHY_API_KEY='FZCA7C1Ii7de7C2Uk6Tt68nF5jiUS0K5';\nconst channels=[['general','general'],['site-requests-and-reports','site requests and reports'],['announcements','announcements'],['vortex','vortex'],['verified','verified']];\nconst DEFAULT_AVATAR='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(`<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><rect width=\"512\" height=\"512\" fill=\"#54243d\"/><circle cx=\"256\" cy=\"210\" r=\"78\" fill=\"#e2a9bf\"/><path d=\"M91 458c20-98 84-145 165-145s145 47 165 145\" fill=\"#e2a9bf\"/></svg>`);\nlet app,auth,db,currentUser=null,profile=null,users={},groups={},dms={},roles={},presence={},messagesRef=null,lastMessages={},profileTarget=null,authMode='signup',currentRoom={type:'channel',id:'general',name:'# general'},contextMessageId=null;\ntry{app=firebase.apps.length?firebase.app():firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.database()}catch(e){console.error(e)}\nconst authPersistenceReady=auth?auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.warn):Promise.resolve();\nconst $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[m]));\nfunction toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>$('toast').classList.remove('show'),2400)}\nfunction openModal(id){$(id)?.classList.add('show')}function closeModal(id){$(id)?.classList.remove('show')}\ndocument.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeModal(b.dataset.close));document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));\nfunction syntheticEmail(u){return u.toLowerCase().replace(/[^a-z0-9_.-]/g,'')+'@squiddcore.chat'}\nfunction accessLevel(u){if(String(u?.username||'').toLowerCase()===OWNER_USERNAME)return'owner';return['owner','coowner'].includes(u?.accessLevel)?u.accessLevel:'member'}\nfunction hasOwnerPowers(u=profile){return ['owner','coowner'].includes(accessLevel(u))}function isOwner(){return !!(currentUser&&profile&&hasOwnerPowers(profile))}function isOriginalOwner(u){return String(u?.username||'').toLowerCase()===OWNER_USERNAME}\nfunction verifiedHtml(u){return u?.verified?'<span class=\"verified\" title=\"Verified\"><i class=\"fa-solid fa-check\"></i></span>':''}\nfunction ownerBadge(u){const a=accessLevel(u);return a==='owner'?'<span class=\"role-badge\" style=\"color:#ff7ab7\">OWNER</span>':a==='coowner'?'<span class=\"role-badge\" style=\"color:#c5a0ff\">CO-OWNER</span>':''}\nfunction roleIds(u){const ids=[];if(u?.roleIds&&typeof u.roleIds==='object')Object.entries(u.roleIds).forEach(([id,on])=>{if(on&&roles[id])ids.push(id)});if(u?.roleId&&roles[u.roleId]&&!ids.includes(u.roleId))ids.push(u.roleId);return ids}\nfunction roleHtml(u){return roleIds(u).map(id=>`<span class=\"role-badge\" style=\"color:${esc(roles[id]?.color||'#e0aac0')}\">${esc(roles[id]?.name||'Role')}</span>`).join('')}\nfunction roleColor(u){const id=roleIds(u)[0];return id&&roles[id]?.color?roles[id].color:'#fff'}\nfunction timeAgo(ts){const d=Math.max(1,Math.floor((Date.now()-Number(ts||Date.now()))/1000));if(d<60)return d+'s ago';if(d<3600)return Math.floor(d/60)+'m ago';if(d<86400)return Math.floor(d/3600)+'h ago';if(d<2592000)return Math.floor(d/86400)+'d ago';return new Date(ts).toLocaleDateString()}\nfunction roomPath(){if(currentRoom.type==='channel')return`${ROOT}/messages/channels/${currentRoom.id}`;if(currentRoom.type==='group')return`${ROOT}/messages/groups/${currentRoom.id}`;return`${ROOT}/messages/dms/${currentRoom.id}`}\nfunction formatBody(text){let o=esc(text);o=o.replace(/(https?:\\/\\/[^\\s]+\\.(?:gif|png|jpe?g|webp))/gi,'<img class=\"media\" src=\"$1\" alt=\"shared image\">');o=o.replace(/@everyone\\b/gi,'<span class=\"mention everyone-mention\">@everyone</span>').replace(/@([a-zA-Z0-9_.-]+)/g,'<span class=\"mention\">@$1</span>');o=o.replace(/\\*\\*(.+?)\\*\\*/g,'<b>$1</b>').replace(/~~(.+?)~~/g,'<s>$1</s>').replace(/__(.+?)__/g,'<u>$1</u>').replace(/\\*(.+?)\\*/g,'<i>$1</i>').replace(/`(.+?)`/g,'<code>$1</code>');return o.replace(/\\n/g,'<br>')}\nfunction renderChannels(){const q=$('searchInput').value.toLowerCase();$('channelList').innerHTML=channels.filter(x=>x[1].includes(q)).map(([id,n])=>`<button class=\"nav-item ${currentRoom.type==='channel'&&currentRoom.id===id?'active':''}\" data-room=\"channel:${id}\"><span class=\"hash\">#</span><span>${esc(n)}</span></button>`).join('')}\nfunction renderDms(){if(!currentUser){$('dmList').innerHTML='<div style=\"color:#9d7085;font-size:11px;padding:5px\">Sign in to use DMs</div>';return}const q=$('searchInput').value.toLowerCase();const list=Object.entries(dms).filter(([,v])=>v.members?.[currentUser.uid]);$('dmList').innerHTML=list.map(([id,v])=>{const uid=Object.keys(v.members||{}).find(x=>x!==currentUser.uid),u=users[uid]||{};if(q&&!`${u.displayName||''} ${u.username||''}`.toLowerCase().includes(q))return'';return`<button class=\"nav-item ${currentRoom.type==='dm'&&currentRoom.id===id?'active':''}\" data-room=\"dm:${id}\"><img class=\"avatar\" src=\"${esc(u.avatar||DEFAULT_AVATAR)}\"><span>${esc(u.displayName||u.username||'User')}</span></button>`}).join('')||'<div style=\"color:#9d7085;font-size:11px;padding:5px\">No DMs yet</div>'}\nfunction renderGroups(){if(!currentUser){$('groupList').innerHTML='<div style=\"color:#9d7085;font-size:11px;padding:5px\">Sign in to make groups</div>';return}const q=$('searchInput').value.toLowerCase();$('groupList').innerHTML=Object.entries(groups).filter(([,g])=>g.members?.[currentUser.uid]&&(!q||String(g.name||'').toLowerCase().includes(q))).map(([id,g])=>`<button class=\"nav-item ${currentRoom.type==='group'&&currentRoom.id===id?'active':''}\" data-room=\"group:${id}\"><span>👥</span><span>${esc(g.name||'Group')}</span></button>`).join('')||'<div style=\"color:#9d7085;font-size:11px;padding:5px\">No groups yet</div>'}\nfunction renderSidebar(){renderChannels();renderDms();renderGroups();document.querySelectorAll('[data-room]').forEach(b=>b.onclick=()=>{const [type,id]=b.dataset.room.split(':');const name=type==='channel'?'# '+(channels.find(x=>x[0]===id)?.[1]||id):type==='group'?(groups[id]?.name||'Group'):'Direct Message';selectRoom(type,id,name)})}\nfunction canType(){if(!currentUser||!profile||profile.banned)return false;if(currentRoom.type==='channel'&&currentRoom.id==='announcements')return hasOwnerPowers(profile)||!!profile.verified;return true}\nfunction updateComposer(){const allowed=canType(),c=$('composer');c.disabled=!allowed;c.placeholder=!currentUser?'You must be authenticated to chat.':profile?.banned?'This account is banned.':allowed?'Message '+currentRoom.name:'You do not have permission to type here.';document.querySelectorAll('.tools button').forEach(b=>b.disabled=!allowed)}\nfunction selectRoom(type,id,name){currentRoom={type,id,name};$('roomTitle').textContent=name;$('searchInput').value='';renderSidebar();listenMessages();renderMembers();updateComposer();if(window.matchMedia('(max-width:680px)').matches)$('sidebar').classList.remove('open')}\nfunction listenMessages(){if(!db)return;if(messagesRef)messagesRef.off();messagesRef=db.ref(roomPath()).limitToLast(150);messagesRef.on('value',s=>{lastMessages=s.val()||{};renderMessages()})}\nfunction renderMessages(){const entries=Object.entries(lastMessages).sort((a,b)=>(a[1].timestamp||0)-(b[1].timestamp||0));if(!entries.length){$('messages').innerHTML='<div class=\"empty\"><div><i class=\"fa-regular fa-comments\"></i><h3>No messages yet</h3><p>Start the conversation.</p></div></div>';return}$('messages').innerHTML=entries.map(([id,m])=>{const u=users[m.uid]||m.user||{},own=currentUser&&m.uid===currentUser.uid;return`<article class=\"message\" data-message-id=\"${esc(id)}\" data-own=\"${own?'true':'false'}\"><img class=\"avatar profile-open\" data-uid=\"${esc(m.uid)}\" src=\"${esc(u.avatar||DEFAULT_AVATAR)}\"><div><div class=\"message-head\"><span class=\"display profile-open\" data-uid=\"${esc(m.uid)}\" style=\"color:${esc(roleColor(u))}\">${esc(u.displayName||u.username||'User')}</span>${verifiedHtml(u)}${ownerBadge(u)}<span class=\"username\">@${esc(u.username||'user')}</span><span class=\"ago\">${timeAgo(m.timestamp)}</span>${m.editedAt?'<span class=\"edited\">(edited)</span>':''}</div><div class=\"body\">${formatBody(m.text||'')}</div></div></article>`}).join('');$('messages').scrollTop=$('messages').scrollHeight;document.querySelectorAll('.profile-open').forEach(x=>x.onclick=()=>showProfile(x.dataset.uid));document.querySelectorAll('.message[data-own=\"true\"]').forEach(el=>el.addEventListener('contextmenu',openMessageMenu))}\nfunction renderMembers(){let ids=[];if(currentRoom.type==='channel')ids=Object.keys(users);else if(currentRoom.type==='group')ids=Object.keys(groups[currentRoom.id]?.members||{});else ids=Object.keys(dms[currentRoom.id]?.members||{});ids=ids.filter(id=>users[id]).sort((a,b)=>{const ao=!!presence[a]?.online,bo=!!presence[b]?.online;if(ao!==bo)return ao?-1:1;return String(users[a]?.displayName||users[a]?.username||'').localeCompare(String(users[b]?.displayName||users[b]?.username||''))});const online=ids.filter(id=>presence[id]?.online),offline=ids.filter(id=>!presence[id]?.online);const row=id=>{const u=users[id],on=!!presence[id]?.online;return`<div class=\"member ${on?'':'offline'} profile-open\" data-uid=\"${esc(id)}\"><img class=\"avatar\" src=\"${esc(u.avatar||DEFAULT_AVATAR)}\"><div><b style=\"font-size:12px;color:${esc(roleColor(u))}\">${esc(u.displayName||u.username||'User')}</b> ${verifiedHtml(u)} ${ownerBadge(u)} ${u.banned?'<span class=\"banned\">BANNED</span>':''}<div style=\"font-size:10px;color:#a47589\">@${esc(u.username||'user')}</div></div><span class=\"status-dot ${on?'online':'offline'}\"></span></div>`};$('memberList').innerHTML=(online.length?`<div class=\"member-section-label\">Online \u2014 ${online.length}</div>${online.map(row).join('')}`:'')+(offline.length?`<div class=\"member-section-label\">Offline \u2014 ${offline.length}</div>${offline.map(row).join('')}`:'')||'<div style=\"color:#9d7085;font-size:11px\">No members yet.</div>';$('memberHeading').textContent=`Members \u2014 ${ids.length}`;document.querySelectorAll('.rightbar .profile-open').forEach(x=>x.onclick=()=>showProfile(x.dataset.uid))}\nasync function sendMessage(){const text=$('composer').value.trim();if(!currentUser)return openModal('authModal');if(!canType())return toast('You cannot send messages here.');if(!text)return;await db.ref(roomPath()).push({uid:currentUser.uid,text,timestamp:firebase.database.ServerValue.TIMESTAMP});$('composer').value=''}\nasync function authSubmit(){const username=$('authUsername').value.trim().toLowerCase(),password=$('authPassword').value;if(!/^[a-z0-9_.-]{3,22}$/.test(username))return toast('Use 3\u201322 letters, numbers, dots, dashes, or underscores.');if(password.length<6)return toast('Password must be at least 6 characters.');try{await authPersistenceReady;if(authMode==='signup'){const taken=(await db.ref(`${ROOT}/usernames/${username}`).once('value')).val();if(taken)return toast('That username is already taken.');const cred=await auth.createUserWithEmailAndPassword(syntheticEmail(username),password);await db.ref(`${ROOT}/users/${cred.user.uid}`).set({username,displayName:username,avatar:'',banner:'',bio:'',joinedAt:firebase.database.ServerValue.TIMESTAMP,friends:{}});await db.ref(`${ROOT}/usernames/${username}`).set(cred.user.uid)}else await auth.signInWithEmailAndPassword(syntheticEmail(username),password);closeModal('authModal')}catch(e){console.error(e);toast(String(e.message||e).replace('Firebase:','').replace(/\\(auth\\/.+\\)\\.?/,'').trim())}}\nasync function setAuthed(u){currentUser=u;profile=u?(users[u.uid]||null):null;if(u&&!profile){const s=await db.ref(`${ROOT}/users/${u.uid}`).once('value');profile=s.val()||null;if(profile)users[u.uid]=profile}$('guestBox').style.display=u?'none':'block';$('newGroupBtn').disabled=!u;$('newDmBtn').disabled=!u;if(u&&profile?.banned){toast('This account has been banned from Berri Chat.');await auth.signOut();return}renderSidebar();renderMembers();renderMessages();renderOwnerPanel();updateComposer()}\nasync function startDmWith(uid){if(!currentUser)return openModal('authModal');if(uid===currentUser.uid)return toast('You cannot DM yourself.');const id=[currentUser.uid,uid].sort().join('_');await db.ref(`${ROOT}/dms/${id}`).update({members:{[currentUser.uid]:true,[uid]:true},updatedAt:Date.now()});closeModal('profileModal');selectRoom('dm',id,'Direct Message')}\nfunction showProfile(uid){const u=users[uid];if(!u)return;profileTarget=uid;$('profileBanner').style.backgroundImage=u.banner?`url(\"${String(u.banner).replace(/\"/g,'')}\")`:'none';$('profileAvatar').src=u.avatar||DEFAULT_AVATAR;$('profileName').innerHTML=esc(u.displayName||u.username||'User')+verifiedHtml(u);$('profileName').style.color=roleColor(u);$('profileUser').textContent='@'+(u.username||'user');$('profileRoles').innerHTML=roleHtml(u)+ownerBadge(u);$('profileBio').textContent=u.bio||'No description yet.';$('profileFriends').textContent=Object.keys(u.friends||{}).length;$('profileJoined').textContent=new Date(u.joinedAt||Date.now()).toLocaleString('en',{month:'long',year:'numeric'});$('profileMessage').style.display=uid===currentUser?.uid?'none':'';$('profileFriend').style.display=uid===currentUser?.uid?'none':'';openModal('profileModal')}\nfunction renderOwnerPanel(){\n const panel=$('ownerPanel');panel.classList.toggle('show',isOwner());if(!isOwner())return;\n const roleOpts='<option value=\"\">Choose role</option>'+Object.entries(roles).map(([id,r])=>`<option value=\"${esc(id)}\">${esc(r.name||'Role')}</option>`).join('');\n panel.innerHTML=`<div class=\"owner-title\"><i class=\"fa-solid fa-crown\"></i> Owner controls</div><div class=\"owner-user\"><b>Create role</b><div class=\"owner-controls\"><input id=\"ownerNewRoleName\" placeholder=\"Role name\" style=\"flex:1;min-width:130px;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:7px;padding:7px 8px\"><input id=\"ownerNewRoleColor\" type=\"color\" value=\"#ff39a5\" style=\"width:42px;height:32px;border:0;background:transparent\"><button id=\"ownerCreateRole\">Add role</button></div></div>`+Object.entries(users).sort((a,b)=>String(a[1].username||'').localeCompare(String(b[1].username||''))).map(([uid,u])=>{const assigned=roleIds(u);const removeOpts='<option value=\"\">Remove role</option>'+assigned.map(id=>`<option value=\"${esc(id)}\">${esc(roles[id]?.name||'Role')}</option>`).join('');return`<div class=\"owner-user\"><div class=\"owner-user-top\"><div><b>${esc(u.displayName||u.username)}</b><div style=\"font-size:10px;color:#ac7b91\">@${esc(u.username||'user')} \u00b7 ${accessLevel(u)} \u00b7 ${assigned.map(id=>roles[id]?.name).filter(Boolean).join(', ')||'No roles'}</div></div>${u.verified?verifiedHtml(u):''}</div><div class=\"owner-controls\"><select data-add-role-select=\"${uid}\">${roleOpts}</select><button data-owner-action=\"addrole\" data-uid=\"${uid}\">Add role</button><select data-remove-role-select=\"${uid}\">${removeOpts}</select><button data-owner-action=\"removerole\" data-uid=\"${uid}\" ${assigned.length?'':'disabled'}>Remove</button><button data-owner-action=\"verify\" data-uid=\"${uid}\">${u.verified?'Unverify':'Verify'}</button><select data-power=\"${uid}\" ${isOriginalOwner(u)?'disabled':''}><option value=\"member\" ${accessLevel(u)==='member'?'selected':''}>Member</option><option value=\"coowner\" ${accessLevel(u)==='coowner'?'selected':''}>Co-owner</option><option value=\"owner\" ${accessLevel(u)==='owner'?'selected':''}>Owner</option></select><button data-owner-action=\"power\" data-uid=\"${uid}\" ${isOriginalOwner(u)?'disabled':''}>Set powers</button><button class=\"danger-btn\" data-owner-action=\"ban\" data-uid=\"${uid}\" ${isOriginalOwner(u)||uid===currentUser.uid?'disabled':''}>${u.banned?'Unban':'Ban'}</button></div></div>`}).join('');\n panel.querySelector('#ownerCreateRole')?.addEventListener('click',async()=>{const name=panel.querySelector('#ownerNewRoleName')?.value.trim(),color=panel.querySelector('#ownerNewRoleColor')?.value||'#ff39a5';if(!name)return toast('Enter a role name.');await db.ref(`${ROOT}/roles`).push({name,color,createdAt:Date.now(),createdBy:currentUser.uid});toast('Role created.')});\n panel.querySelectorAll('[data-owner-action]').forEach(b=>b.onclick=async()=>{const uid=b.dataset.uid,u=users[uid];if(!u||!isOwner())return;const action=b.dataset.ownerAction;if(action==='addrole'){const rid=panel.querySelector(`[data-add-role-select=\"${uid}\"]`)?.value;if(!rid)return toast('Choose a role.');await db.ref(`${ROOT}/users/${uid}/roleIds/${rid}`).set(true)}if(action==='removerole'){const rid=panel.querySelector(`[data-remove-role-select=\"${uid}\"]`)?.value;if(!rid)return toast('Choose a role.');await db.ref(`${ROOT}/users/${uid}/roleIds/${rid}`).remove();if(u.roleId===rid)await db.ref(`${ROOT}/users/${uid}/roleId`).remove()}if(action==='verify'){if(isOriginalOwner(u))return toast('The original owner cannot be changed.');await db.ref(`${ROOT}/users/${uid}/verified`).set(!u.verified)}if(action==='power'){if(isOriginalOwner(u))return;const level=panel.querySelector(`[data-power=\"${uid}\"]`)?.value;if(level==='member')await db.ref(`${ROOT}/users/${uid}/accessLevel`).remove();else await db.ref(`${ROOT}/users/${uid}/accessLevel`).set(level)}if(action==='ban'){if(isOriginalOwner(u)||uid===currentUser.uid)return;await db.ref(`${ROOT}/users/${uid}/banned`).set(!u.banned)}toast('Updated.');})\n}\nfunction openMessageMenu(e){e.preventDefault();contextMessageId=e.currentTarget.dataset.messageId;const menu=$('messageMenu');menu.style.left=Math.min(e.clientX,window.innerWidth-170)+'px';menu.style.top=Math.min(e.clientY,window.innerHeight-100)+'px';menu.classList.add('show')}\nfunction closeMessageMenu(){ $('messageMenu').classList.remove('show') }\ndocument.addEventListener('click',e=>{if(!e.target.closest('#messageMenu'))closeMessageMenu()});$('editMessageBtn').onclick=()=>{const m=lastMessages[contextMessageId];closeMessageMenu();if(!m||m.uid!==currentUser?.uid)return;$('editMessageInput').value=m.text||'';openModal('editModal');setTimeout(()=>$('editMessageInput').focus(),20)};$('unsendMessageBtn').onclick=async()=>{const id=contextMessageId,m=lastMessages[id];closeMessageMenu();if(!m||m.uid!==currentUser?.uid)return;if(confirm('Unsend this message?'))await db.ref(roomPath()+'/'+id).remove()};$('saveEditBtn').onclick=async()=>{const m=lastMessages[contextMessageId],text=$('editMessageInput').value.trim();if(!m||m.uid!==currentUser?.uid||!text)return;await db.ref(roomPath()+'/'+contextMessageId).update({text,editedAt:firebase.database.ServerValue.TIMESTAMP});closeModal('editModal');toast('Message edited.')}\n$('openAuthBtn').onclick=()=>openModal('authModal');$('authSubmit').onclick=authSubmit;$('switchAuth').onclick=()=>{authMode=authMode==='signup'?'login':'signup';$('authTitle').textContent=authMode==='signup'?'Create your Berri Chat account':'Log in to Berri Chat';$('authSubmit').textContent=authMode==='signup'?'Create':'Log in';$('switchAuth').textContent=authMode==='signup'?'I already have an account':'I need an account'};\n$('newDmBtn').onclick=()=>currentUser?openModal('dmModal'):openModal('authModal');$('newGroupBtn').onclick=()=>currentUser?openModal('groupModal'):openModal('authModal');$('createDm').onclick=async()=>{if(!currentUser)return;const name=$('dmUsername').value.trim().toLowerCase(),uid=(await db.ref(`${ROOT}/usernames/${name}`).once('value')).val();if(!uid)return toast('User not found.');closeModal('dmModal');startDmWith(uid)};$('createGroup').onclick=async()=>{if(!currentUser)return;const name=$('groupName').value.trim(),names=$('groupMembers').value.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);if(!name)return toast('Enter a group name.');const members={[currentUser.uid]:true};for(const n of names){const uid=(await db.ref(`${ROOT}/usernames/${n}`).once('value')).val();if(uid)members[uid]=true}const ref=db.ref(`${ROOT}/groups`).push();await ref.set({name,owner:currentUser.uid,members,createdAt:Date.now()});closeModal('groupModal');selectRoom('group',ref.key,name)};\n$('settingsBtn').onclick=()=>{if(!currentUser)return openModal('authModal');$('setDisplay').value=profile?.displayName||'';$('setAvatar').value=profile?.avatar||'';$('setBanner').value=profile?.banner||'';$('setBio').value=profile?.bio||'';renderOwnerPanel();openModal('settingsModal')};$('saveSettings').onclick=async()=>{if(!currentUser)return;await db.ref(`${ROOT}/users/${currentUser.uid}`).update({displayName:$('setDisplay').value.trim()||profile.username,avatar:$('setAvatar').value.trim(),banner:$('setBanner').value.trim(),bio:$('setBio').value.trim()});closeModal('settingsModal');toast('Profile saved.')};$('signOutBtn').onclick=async()=>{await auth.signOut();closeModal('settingsModal');toast('Signed out.')};\n$('profileMessage').onclick=()=>profileTarget&&startDmWith(profileTarget);$('profileFriend').onclick=async()=>{if(!currentUser)return openModal('authModal');if(!profileTarget)return;await db.ref(`${ROOT}/users/${currentUser.uid}/friends/${profileTarget}`).set(true);await db.ref(`${ROOT}/users/${profileTarget}/friends/${currentUser.uid}`).set(true);toast('Friend added.');showProfile(profileTarget)};\n$('gifBtn').onclick=()=>{if(!currentUser)return openModal('authModal');$('gifSearch').value='';$('gifResults').innerHTML='';$('gifStatus').textContent='Search GIPHY GIFs.';openModal('gifModal')};async function searchGiphy(){const q=$('gifSearch').value.trim();if(!q)return;$('gifStatus').textContent='Searching\u2026';try{const r=await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(GIPHY_API_KEY)}&q=${encodeURIComponent(q)}&limit=24&rating=pg-13&lang=en&bundle=messaging_non_clips`);const d=await r.json(),arr=Array.isArray(d.data)?d.data:[];$('gifStatus').textContent=arr.length?`Results for \u201c${q}\u201d`:'No GIFs found.';$('gifResults').innerHTML=arr.map((g,i)=>{const src=g?.images?.fixed_width?.url||g?.images?.downsized?.url||g?.images?.original?.url||'',preview=g?.images?.fixed_width_small?.url||src;return src?`<button class=\"gif-result\" data-gif=\"${esc(src)}\"><img src=\"${esc(preview)}\" alt=\"GIF ${i+1}\" loading=\"lazy\"></button>`:''}).join('');document.querySelectorAll('[data-gif]').forEach(b=>b.onclick=()=>{$('composer').value+=($('composer').value?'\\n':'')+b.dataset.gif;closeModal('gifModal');$('composer').focus()})}catch(e){console.error(e);$('gifStatus').textContent='GIPHY search could not load.'}}$('searchGifBtn').onclick=searchGiphy;$('gifSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();searchGiphy()}});\ndocument.querySelectorAll('[data-format]').forEach(b=>b.onclick=()=>{const t=$('composer'),f=b.dataset.format,s=t.selectionStart,e=t.selectionEnd,v=t.value;if(f.endsWith(' '))t.value=v.slice(0,s)+f+v.slice(s);else t.value=v.slice(0,s)+f+v.slice(s,e)+f+v.slice(e);t.focus()});$('sendBtn').onclick=sendMessage;$('composer').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}});$('searchInput').addEventListener('input',renderSidebar);\n$('chatHomeBtn').onclick=()=>{if(typeof window.berriNavigateInternal==='function')window.berriNavigateInternal('berri://home')};$('mobileMenuBtn').onclick=e=>{e.stopPropagation();document.querySelector('.rightbar').classList.remove('show');$('sidebar').classList.toggle('open')};$('membersBtn').onclick=e=>{e.stopPropagation();if(window.matchMedia('(max-width:980px)').matches){$('sidebar').classList.remove('open');document.querySelector('.rightbar').classList.toggle('show')}};document.addEventListener('click',e=>{if(window.matchMedia('(max-width:680px)').matches&&$('sidebar').classList.contains('open')&&!e.target.closest('#sidebar')&&!e.target.closest('#mobileMenuBtn'))$('sidebar').classList.remove('open');if(window.matchMedia('(max-width:980px)').matches&&document.querySelector('.rightbar').classList.contains('show')&&!e.target.closest('.rightbar')&&!e.target.closest('#membersBtn'))document.querySelector('.rightbar').classList.remove('show')});\nif(db){db.ref(`${ROOT}/users`).on('value',async s=>{users=s.val()||{};profile=currentUser?users[currentUser.uid]||profile:null;if(currentUser&&profile?.banned){toast('This account has been banned from Berri Chat.');await auth.signOut();return}renderSidebar();renderMembers();renderMessages();renderOwnerPanel();updateComposer();if(profileTarget&&$('profileModal').classList.contains('show'))showProfile(profileTarget)});db.ref(`${ROOT}/presence`).on('value',s=>{presence=s.val()||{};renderMembers()});db.ref(`${ROOT}/roles`).on('value',s=>{roles=s.val()||{};renderMembers();renderMessages();renderOwnerPanel()});db.ref(`${ROOT}/groups`).on('value',s=>{groups=s.val()||{};renderSidebar()});db.ref(`${ROOT}/dms`).on('value',s=>{dms=s.val()||{};renderSidebar()})}\nauthPersistenceReady.finally(()=>auth?.onAuthStateChanged(async u=>{await setAuthed(u);if(u){const p=db.ref(`${ROOT}/presence/${u.uid}`);p.onDisconnect().set({online:false,lastSeen:firebase.database.ServerValue.TIMESTAMP});p.set({online:true,lastSeen:firebase.database.ServerValue.TIMESTAMP})}}));\nrenderSidebar();listenMessages();updateComposer();\n";
+  let chatHtmlPromise = null;
 
-  let firebaseReady = null;
+  function addBaseUrl(html) {
+    const base =
+      `<base href="https://berrios-lumin-games-integrated.vercel.app/">`;
 
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      const existing = Array.from(document.scripts).find(s => s.src === src);
+    if (/<head[^>]*>/i.test(html)) {
+      return html.replace(
+        /<head([^>]*)>/i,
+        `<head$1>${base}`
+      );
+    }
 
-      if (existing) {
-        if (existing.dataset.loaded === '1') return resolve();
+    return `
+      <!doctype html>
+      <html>
+        <head>${base}</head>
+        <body>${html}</body>
+      </html>
+    `;
+  }
 
-        existing.addEventListener('load', resolve, { once:true });
-        existing.addEventListener('error', reject, { once:true });
+  function getLiveChatHtml() {
+    if (!chatHtmlPromise) {
+      chatHtmlPromise = fetch(
+        LIVE_CHAT_URL,
+        {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'omit',
+          cache: 'no-cache'
+        }
+      )
+        .then(async response => {
+          if (!response.ok) {
+            throw new Error(
+              `Chat source returned ${response.status}`
+            );
+          }
 
-        return;
+          const html =
+            await response.text();
+
+          return addBaseUrl(html);
+        })
+        .catch(error => {
+          chatHtmlPromise = null;
+          throw error;
+        });
+    }
+
+    return chatHtmlPromise;
+  }
+
+  function goHome() {
+    if (
+      typeof window.berriNavigateInternal ===
+      'function'
+    ) {
+      window.berriNavigateInternal(
+        'berri://home'
+      );
+    }
+  }
+
+  window.addEventListener(
+    'message',
+    event => {
+      if (
+        event?.data?.type ===
+        'sq-close-chat'
+      ) {
+        goHome();
+      }
+    }
+  );
+
+  window.buildBerriChatPage =
+    function buildBerriChatPage(tab) {
+      if (tab.__berriChatView) {
+        return tab.__berriChatView;
       }
 
-      const s = document.createElement('script');
+      const host =
+        document.createElement(
+          'div'
+        );
 
-      s.src = src;
-      s.async = true;
+      host.className =
+        'bb-chat-route';
 
-      s.addEventListener(
+      host.style.width =
+        '100%';
+
+      host.style.height =
+        '100%';
+
+      host.style.minHeight =
+        '0';
+
+      host.style.position =
+        'relative';
+
+      host.style.overflow =
+        'hidden';
+
+      host.style.background =
+        '#000';
+
+      const frame =
+        document.createElement(
+          'iframe'
+        );
+
+      frame.className =
+        'bb-chat-live-frame';
+
+      frame.title =
+        'Berri Chat';
+
+      frame.setAttribute(
+        'allow',
+        'clipboard-read; clipboard-write; microphone; camera; autoplay; fullscreen'
+      );
+
+      frame.style.width =
+        '100%';
+
+      frame.style.height =
+        '100%';
+
+      frame.style.minHeight =
+        '0';
+
+      frame.style.display =
+        'block';
+
+      frame.style.border =
+        '0';
+
+      frame.style.background =
+        '#000';
+
+      const loading =
+        document.createElement(
+          'div'
+        );
+
+      loading.textContent =
+        'Loading Chat…';
+
+      loading.style.position =
+        'absolute';
+
+      loading.style.inset =
+        '0';
+
+      loading.style.display =
+        'grid';
+
+      loading.style.placeItems =
+        'center';
+
+      loading.style.background =
+        '#000';
+
+      loading.style.color =
+        '#fff';
+
+      loading.style.font =
+        '600 14px Inter, system-ui, sans-serif';
+
+      loading.style.zIndex =
+        '2';
+
+      host.appendChild(frame);
+      host.appendChild(loading);
+
+      frame.addEventListener(
         'load',
         () => {
-          s.dataset.loaded = '1';
-          resolve();
+          loading.remove();
         },
-        { once:true }
+        { once: true }
       );
 
-      s.addEventListener(
-        'error',
-        reject,
-        { once:true }
-      );
+      getLiveChatHtml()
+        .then(html => {
+          /*
+            This loads the exact working
+            chat document inside berri://chat.
 
-      document.head.appendChild(s);
-    });
-  }
-
-  function ensureFirebase() {
-    if (
-      window.firebase?.database &&
-      window.firebase?.auth
-    ) {
-      return Promise.resolve();
-    }
-
-    if (!firebaseReady) {
-      firebaseReady =
-        loadScript(
-          'https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js'
-        )
-        .then(() =>
-          loadScript(
-            'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js'
-          )
-        )
-        .then(() =>
-          loadScript(
-            'https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js'
-          )
-        );
-    }
-
-    return firebaseReady;
-  }
-
-  window.buildBerriChatPage = function(tab) {
-    if (tab.__berriChatView) {
-      return tab.__berriChatView;
-    }
-
-    const host =
-      document.createElement('div');
-
-    host.className =
-      'bb-chat-route';
-
-    host.style.width =
-      '100%';
-
-    host.style.height =
-      '100%';
-
-    host.style.minHeight =
-      '0';
-
-    host.style.overflow =
-      'hidden';
-
-    const shadow =
-      host.attachShadow({
-        mode: 'open'
-      });
-
-    shadow.innerHTML =
-      `<style>${CHAT_CSS}</style>${CHAT_MARKUP}`;
-
-    tab.__berriChatView =
-      host;
-
-    ensureFirebase()
-      .then(() => {
-        if (
-          host.dataset.chatInitialized ===
-          '1'
-        ) {
-          return;
-        }
-
-        host.dataset.chatInitialized =
-          '1';
-
-        try {
-          new Function(
-            'document',
-            'host',
-            CHAT_CODE
-          )(shadow, host);
-        } catch (err) {
+            It does NOT navigate Berri
+            itself to chat.html.
+          */
+          frame.srcdoc = html;
+        })
+        .catch(error => {
           console.error(
-            'Berri Chat failed to initialize:',
-            err
+            'Could not copy the live RIW/Berri Chat into berri://chat:',
+            error
           );
 
-          shadow.innerHTML = `
-            <style>${CHAT_CSS}</style>
+          /*
+            Fallback:
+            if fetching the HTML gets
+            blocked for some reason,
+            load that exact working chat
+            directly inside this iframe.
+          */
+          frame.src =
+            LIVE_CHAT_URL;
+        });
 
-            <div
-              style="
-                height:100%;
-                display:grid;
-                place-items:center;
-                background:#180914;
-                color:#fff6f2;
-                font:600 14px Inter,sans-serif
-              "
-            >
-              <div style="text-align:center">
-                <h2 style="margin:0 0 8px">
-                  Chat could not start
-                </h2>
+      tab.__berriChatView =
+        host;
 
-                <p
-                  style="
-                    margin:0;
-                    color:#c78fa7
-                  "
-                >
-                  ${String(
-                    err?.message ||
-                    err
-                  )}
-                </p>
-              </div>
-            </div>
-          `;
-        }
-      })
-      .catch(err => {
-        console.error(
-          'Firebase failed to load:',
-          err
-        );
-
-        shadow.innerHTML = `
-          <style>${CHAT_CSS}</style>
-
-          <div
-            style="
-              height:100%;
-              display:grid;
-              place-items:center;
-              background:#180914;
-              color:#fff6f2;
-              font:600 14px Inter,sans-serif
-            "
-          >
-            <div style="text-align:center">
-              <h2 style="margin:0 0 8px">
-                Chat is offline
-              </h2>
-
-              <p
-                style="
-                  margin:0;
-                  color:#c78fa7
-                "
-              >
-                Firebase could not load.
-                Check the connection and reload.
-              </p>
-            </div>
-          </div>
-        `;
-      });
-
-    return host;
-  };
+      return host;
+    };
 })();
